@@ -44,7 +44,7 @@ input, textarea, select { font-family: 'DM Sans', sans-serif; }
   border: none;
 }
 
-/* Buttons */
+/* Buttons section */
 .btn-gold {
   background: linear-gradient(135deg, var(--gold), var(--gold-dark));
   color: #0a0908;
