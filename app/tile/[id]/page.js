@@ -28,7 +28,7 @@ export default function TileDetailPage() {
 
   if (isPending || loading) return <div className="loading-screen" style={{ paddingTop: 70 }}><div className="spinner"></div></div>;
   if (!session) return null;
-  if (!tile) return (
+  if (!tile || tile.error) return (
     <div style={{ paddingTop: 120, textAlign: "center" }}>
       <p style={{ color: "#8a7f74" }}>Tile not found.</p>
       <Link href="/all-tiles"><button className="btn-outline" style={{ marginTop: "1rem" }}>Back to Gallery</button></Link>
@@ -38,19 +38,15 @@ export default function TileDetailPage() {
   return (
     <div className="page-enter" style={{ paddingTop: 70, minHeight: "100vh" }}>
       <div className="container" style={{ padding: "3rem 1.5rem" }}>
-
         <Link href="/all-tiles" style={{ color: "#8a7f74", fontSize: "0.85rem", letterSpacing: "0.1em", display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "2rem" }}>
           ← Back to Collection
         </Link>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }} className="detail-grid">
-
-          {/* Image */}
           <div style={{ borderRadius: 4, overflow: "hidden", border: "1px solid #2a2520" }}>
             <img src={tile.image} alt={tile.title} style={{ width: "100%", height: 480, objectFit: "cover", display: "block" }} />
           </div>
 
-          {/* Info */}
           <div>
             <span className={`badge ${tile.inStock ? "badge-in" : "badge-out"}`} style={{ marginBottom: "1rem", display: "inline-block" }}>
               {tile.inStock ? "In Stock" : "Out of Stock"}
@@ -66,7 +62,6 @@ export default function TileDetailPage() {
 
             <p style={{ color: "#8a7f74", lineHeight: 1.8, marginBottom: "2rem", fontSize: "0.95rem" }}>{tile.description}</p>
 
-            {/* Specs */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.5rem" }}>
               {[
                 { label: "Material", value: tile.material },
@@ -81,7 +76,6 @@ export default function TileDetailPage() {
               ))}
             </div>
 
-            {/* Tags */}
             {tile.tags && (
               <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "2.5rem" }}>
                 {tile.tags.map((tag) => (
