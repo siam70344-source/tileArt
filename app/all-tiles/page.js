@@ -8,18 +8,24 @@ export default function AllTilesPage() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("/api/tiles")
-      .then((r) => r.json())
-      .then((data) => { setTiles(data); setFiltered(data); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, []);
+ useEffect(() => {
+  fetch("/api/tiles")
+    .then((r) => r.json())
+    .then((data) => {
+      const list = Array.isArray(data) ? data : [];
+      setTiles(list);
+      setFiltered(list);
+      setLoading(false);
+    })
+    .catch(() => setLoading(false));
+}, []);
 
-  useEffect(() => {
-    const q = search.toLowerCase();
-    setFiltered(tiles.filter((t) => t.title.toLowerCase().includes(q)));
-  }, [search, tiles]);
-
+useEffect(() => {
+  const q = search.toLowerCase();
+  setFiltered(
+    tiles.filter((t) => (t.title || "").toLowerCase().includes(q))
+  );
+}, [search, tiles]);
   return (
     <div className="page-enter" style={{ paddingTop: 70, minHeight: "100vh" }}>
       <div className="container" style={{ padding: "3rem 1.5rem" }}>

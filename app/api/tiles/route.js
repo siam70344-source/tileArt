@@ -2,33 +2,23 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongoose";
 import mongoose from "mongoose";
 
-export async function GET(request, { params }) {
+export async function GET() {
   try {
     await connectDB();
 
-    const { id } = params;
-
     const db = mongoose.connection.db;
+    const tiles = await db.collection("tiles").find({}).toArray();
 
-    const tile = await db.collection("tiles").findOne({
-      _id: new mongoose.Types.ObjectId(id),
-    });
+    const result = tiles.map((tile) => ({
+      ...tile,
+      _id: tile._id.toString(),
+    }));
 
-    if (!tile) {
-      return NextResponse.json(
-        { message: "Tile not found" },
-        { status: 404 }
-      );
-    }
-
-    tile._id = tile._id.toString();
-
-    return NextResponse.json(tile);
+    return NextResponse.json(result);
   } catch (error) {
     console.error(error);
-
     return NextResponse.json(
-      { message: "Failed to fetch tile" },
+      { message: "Failed to fetch tiles" },
       { status: 500 }
     );
   }
