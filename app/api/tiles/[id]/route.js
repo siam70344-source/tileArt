@@ -7,9 +7,21 @@ export async function GET(request, { params }) {
     await connectDB();
     const db = mongoose.connection.db;
     const { ObjectId } = mongoose.Types;
-    const tile = await db.collection("tiles").findOne({ 
-      _id: new ObjectId(params.id) 
-    });
+    const id = params.id;
+
+    // Try ObjectId first, then string
+    let tile = null;
+    try {
+      tile = await db.collection("tiles").findOne({ _id: new ObjectId(id) });
+    } catch (e) {
+      tile = null;
+    }
+
+    // If not found, try as string
+    if (!tile) {
+      tile = await db.collection("tiles").findOne({ _id: id });
+    }
+
     if (!tile) return NextResponse.json({ error: "Tile not found" }, { status: 404 });
     return NextResponse.json({ ...tile, _id: tile._id.toString() });
   } catch (error) {
