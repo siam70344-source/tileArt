@@ -6,26 +6,23 @@ export async function GET(request, { params }) {
   try {
     await connectDB();
     const db = mongoose.connection.db;
-    const { ObjectId } = mongoose.Types;
     const id = params.id;
 
-    // Try ObjectId first, then string
-    let tile = null;
-    try {
-      tile = await db.collection("tiles").findOne({ _id: new ObjectId(id) });
-    } catch (e) {
-      tile = null;
-    }
+    // Search by string _id directly (since your IDs were inserted as strings)
+    const tile = await db.collection("tiles").findOne({ 
+      _id: id 
+    });
 
-    // If not found, try as string
     if (!tile) {
-      tile = await db.collection("tiles").findOne({ _id: id });
+      // Try to find any tile to debug
+      const anyTile = await db.collection("tiles").findOne({});
+      console.log("Sample tile _id type:", typeof anyTile?._id, "value:", anyTile?._id);
+      return NextResponse.json({ error: "Tile not found", searched_id: id }, { status: 404 });
     }
-
-    if (!tile) return NextResponse.json({ error: "Tile not found" }, { status: 404 });
+    
     return NextResponse.json({ ...tile, _id: tile._id.toString() });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Failed to fetch tile" }, { status: 500 });
+    console.error("Tile fetch error:", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
