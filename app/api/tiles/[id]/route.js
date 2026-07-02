@@ -5,31 +5,26 @@ import mongoose from "mongoose";
 export async function GET(request, { params }) {
   try {
     await connectDB();
-    const id = params.id;
-    const db = mongoose.connection.db;
 
-    const tiles = await db.collection("tiles").find({}).toArray();
-    
-    // Debug first tile
-    const first = tiles[0];
-    const firstIdRaw = first?._id;
-    const firstIdStr = String(firstIdRaw);
-    const firstIdJSON = JSON.stringify(firstIdRaw);
+    const { id } = await params; // ✅ required in Next.js 16
 
-    const tile = tiles.find(t => String(t._id) === id || JSON.stringify(t._id) === `"${id}"`);
-
-    if (!tile) {
-      return NextResponse.json({ 
-        error: "Tile not found",
-        id,
-        firstIdRaw: firstIdJSON,
-        firstIdStr,
-        match: firstIdStr === id,
-      }, { status: 404 });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json({ message: "Invalid tile ID" }, { status: 400 });
     }
 
-    return NextResponse.json({ ...tile, _id: String(tile._id) });
+    const db = mongoose.connection.db;
+    const tile = await db.collection("tiles").findOne({
+      _id: new mongoose.Types.ObjectId(id),
+    });
+
+    if (!tile) {
+      return NextResponse.json({ message: "Tile not found" }, { status: 404 });
+    }
+
+    tile._id = tile._id.toString();
+    return NextResponse.json(tile);
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ message: "Failed to fetch tile" }, { status: 500 });
   }
 }
