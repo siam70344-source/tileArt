@@ -1,52 +1,93 @@
-# TileArt Gallery
+# 🎨 TileArt Gallery
 
-## Project Purpose
-A premium tile gallery website to showcase and discover beautiful tiles from around the world. Users can browse ceramic, marble, terracotta, mosaic, and designer tiles with detailed information.
+**TileArt** is a premium tile gallery web application showcasing ceramic, marble, terracotta, and mosaic tile designs from artisans around the world. Users can browse collections, view details, and explore artisan profiles.
 
-## Live URL
-[TileArt Gallery](https://your-live-url.vercel.app)
+🔗 **Live Site:** [tiles-art01.vercel.app](https://tiles-art01.vercel.app/)
+🔗 **Repository:** [tileArt](https://github.com/SafayatCode/tileArt.git)
 
-## Key Features
-- 🏠 Home page with hero banner and featured tiles slider
-- 🔍 Search tiles by title on All Tiles page
-- 🔐 User authentication (Email/Password + Google OAuth)
-- 👤 My Profile page with update functionality
-- 📱 Fully responsive on mobile, tablet, and desktop
-- 🎨 Unique luxury dark gold design theme
-- ✨ Smooth animations and transitions
-- 🔒 Private routes for tile details and profile
-- 📄 Not-found page for invalid routes
-- ⏳ Loading spinner on data fetching
+<!-- ![TileArt Screenshot](./screenshot.png) -->
+> 📸 *Add a screenshot of the homepage here (screenshot.png) once available.*
 
-## Pages
-| Page | Route | Access |
-|------|-------|--------|
-| Home | / | Public |
-| All Tiles | /all-tiles | Public |
-| Login | /login | Public |
-| Register | /register | Public |
-| Tile Details | /tile/[id] | Private |
-| My Profile | /my-profile | Private |
-| Update Profile | /update-profile | Private |
+---
 
-## NPM Packages Used
-| Package | Purpose |
-|---------|---------|
-| better-auth | Authentication |
-| mongoose | MongoDB connection |
-| react-hot-toast | Toast notifications |
-| swiper | Featured tiles slider |
-| json-server | Mock API for tile data |
-| next | React framework |
-| typescript | Type safety |
-| tailwindcss | Styling |
+## ✨ Key Features
 
-## Tech Stack
-- **Framework:** Next.js 16 (App Router)
-- **Authentication:** BetterAuth with MongoDB Adapter
-- **Database:** MongoDB Atlas
-- **Styling:** Tailwind CSS + Custom CSS
-- **UI Library:** Custom components with DaisyUI concepts
-- **Animation:** SwiperJS + CSS Animations
+- 🖼️ **Tile Gallery** — Browse a curated collection of ceramic, marble, terracotta, and mosaic tile designs
+- 🔎 **Search & Filter** — Explore tiles by category, material, or artisan
+- 👤 **Artisan Profiles** — View details about the artisans behind each design
+- 🔐 **User Authentication** — Secure login/register powered by Better Auth
+- ✨ **Toast Notifications & Animations** — Smooth UI feedback and transitions
+- ⚡ **Fast Performance** — Built with Next.js (App Router) for optimized loading and SEO
 
-## Environment Variables
+---
+
+## 🛠️ Tech Stack
+
+**Framework:** Next.js 16, React 18
+**Database:** MongoDB (Mongoose)
+**Authentication:** Better Auth
+**Styling/UI:** Animate.css, React Hot Toast
+**Deployment:** Vercel
+
+---
+
+## 📦 Dependencies
+
+```json
+"animate.css": "^4.1.1",
+"better-auth": "^1.2.7",
+"kysely": "^0.27.4",
+"mongoose": "^8.0.0",
+"next": "^16.2.9",
+"react": "^18.3.1",
+"react-dom": "^18.3.1",
+"react-hot-toast": "^2.4.1"
+```
+
+---
+
+## 🚀 Run Locally
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/SafayatCode/tileArt.git
+cd tileArt
+```
+
+**2. Install dependencies**
+
+```bash
+npm install
+```
+
+**3. Set up environment variables**
+
+Create a `.env` (or `.env.local`) file with:
+
+```
+MONGODB_URI=your_mongodb_connection_string
+BETTER_AUTH_SECRET=your_better_auth_secret
+BETTER_AUTH_URL=http://localhost:3000
+```
+
+> ⚠️ Update these variable names to match exactly what your project's Better Auth and MongoDB setup expects.
+
+**4. Run the development server**
+
+```bash
+npm run dev
+```
+
+**5. Open in browser**
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🔗 Links
+
+- 🌐 Live Site: [tiles-art01.vercel.app](https://tiles-art01.vercel.app/)
+- 💻 Repository: [tileArt](https://github.com/SafayatCode/tileArt.git)
